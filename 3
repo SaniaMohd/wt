@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Marks Calculator</title>
+<style>
+body { text-align:center; font-family:Arial; }
+input { margin:5px; padding:8px; }
+button { padding:10px; background:green; color:white; border:none; }
+table { margin:auto; border-collapse:collapse; }
+td, th { border:1px solid black; padding:10px; }
+</style>
+</head>
+
+<body>
+
+<h2>Marks Calculator</h2>
+
+<input type="number" id="m1">
+<input type="number" id="m2">
+<input type="number" id="m3">
+<input type="number" id="m4">
+<input type="number" id="m5">
+
+<br><br>
+<button onclick="calc()">Calculate</button>
+
+<div id="result"></div>
+
+<script>
+function calc() {
+  let m1 = parseInt(m1.value)||0;
+  let m2 = parseInt(m2.value)||0;
+  let m3 = parseInt(m3.value)||0;
+  let m4 = parseInt(m4.value)||0;
+  let m5 = parseInt(m5.value)||0;
+
+  let total = m1+m2+m3+m4+m5;
+  let avg = total/5;
+
+  let grade = avg>=90?"A":avg>=75?"B":avg>=50?"C":"Fail";
+
+  result.innerHTML =
+    `<table>
+      <tr><th>Total</th><th>Average</th><th>Grade</th></tr>
+      <tr><td>${total}</td><td>${avg.toFixed(2)}</td><td>${grade}</td></tr>
+    </table>`;
+}
+</script>
+
+</body>
+</html>
