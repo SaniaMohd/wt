@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Laptops</title>
+<style>
+body { text-align:center; font-family:Arial; }
+table { margin:auto; border-collapse:collapse; }
+td, th { border:1px solid black; padding:10px; }
+</style>
+</head>
+
+<body onload="loadXML()">
+
+<h2>Laptop List</h2>
+
+<select onchange="display(this.value)">
+  <option value="all">All</option>
+  <option value="i3">i3</option>
+  <option value="i5">i5</option>
+  <option value="i7">i7</option>
+</select>
+
+<br><br>
+
+<table id="output"></table>
+
+<script>
+let xmlDoc;
+
+function loadXML() {
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      xmlDoc = this.responseXML;
+      display("all");
+    }
+  };
+  xhttp.open("GET", "laptops.xml", true);
+  xhttp.send();
+}
+
+function display(type) {
+  if (!xmlDoc) return;
+
+  let laptops = xmlDoc.getElementsByTagName("laptop");
+  let table = "<tr><th>Brand</th><th>Model</th><th>Price</th><th>Processor</th></tr>";
+
+  for (let i = 0; i < laptops.length; i++) {
+    let p = laptops[i].getElementsByTagName("processor")[0].textContent;
+
+    if (type === "all" || p === type) {
+      table += "<tr>" +
+        "<td>"+laptops[i].getElementsByTagName("brand")[0].textContent+"</td>" +
+        "<td>"+laptops[i].getElementsByTagName("model")[0].textContent+"</td>" +
+        "<td>"+laptops[i].getElementsByTagName("price")[0].textContent+"</td>" +
+        "<td>"+p+"</td></tr>";
+    }
+  }
+
+  document.getElementById("output").innerHTML = table;
+}
+</script>
+
+</body>
+</html>
+
+<laptops>
+  <laptop><brand>Dell</brand><model>Inspiron</model><price>60000</price><processor>i5</processor></laptop>
+  <laptop><brand>HP</brand><model>Pavilion</model><price>55000</price><processor>i3</processor></laptop>
+  <laptop><brand>Lenovo</brand><model>ThinkPad</model><price>75000</price><processor>i7</processor></laptop>
+</laptops>
