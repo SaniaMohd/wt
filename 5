@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family:Arial; margin:0; }
+
+header, nav, footer {
+  background:#333; color:white;
+  padding:15px; text-align:center;
+}
+
+main { width:70%; float:left; padding:20px; }
+aside { width:25%; float:right; padding:20px; background:#f4f4f4; }
+
+button { position:fixed; top:10px; right:10px; }
+
+.dark { background:black; color:white; }
+.dark header, .dark nav, .dark footer { background:#111; }
+.dark aside { background:#222; }
+</style>
+</head>
+
+<body>
+
+<button onclick="toggle()">Toggle Mode</button>
+
+<header>My Blog</header>
+<nav>Home | About | Contact</nav>
+
+<main>
+<h2>Article</h2>
+<p>Content goes here...</p>
+</main>
+
+<aside>
+<h3>Sidebar</h3>
+</aside>
+
+<footer>Footer</footer>
+
+<script>
+function toggle(){
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
