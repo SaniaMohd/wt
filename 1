@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Feedback Form</title>
+<style>
+body { font-family: Arial; background:#f2f2f2; }
+.container { width:350px; margin:50px auto; background:white; padding:20px; }
+input, select, button { width:100%; padding:8px; margin:8px 0; }
+button { background:blue; color:white; border:none; }
+</style>
+
+<script>
+function validateForm() {
+  let name = name1.value;
+  let email = email1.value;
+  let course = course1.value;
+  let rating = rating1.value;
+
+  let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+  if (!name || !email || !course || !rating) {
+    alert("All fields required");
+    return false;
+  }
+  if (!email.match(pattern)) {
+    alert("Invalid Email");
+    return false;
+  }
+  return true;
+}
+</script>
+</head>
+
+<body>
+<div class="container">
+<h2>Feedback Form</h2>
+
+<form action="FeedbackServlet" method="post" onsubmit="return validateForm()">
+  <input type="text" id="name1" name="name" placeholder="Name">
+  <input type="text" id="email1" name="email" placeholder="Email">
+  <input type="text" id="course1" name="course" placeholder="Course">
+
+  <select id="rating1" name="rating">
+    <option value="">Select</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+
+  <button type="submit">Submit</button>
+</form>
+</div>
+</body>
+</html>
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import java.io.*;
+
+public class FeedbackServlet extends HttpServlet {
+  protected void doPost(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+
+    req.setAttribute("name", req.getParameter("name"));
+    req.setAttribute("email", req.getParameter("email"));
+    req.setAttribute("course", req.getParameter("course"));
+    req.setAttribute("rating", req.getParameter("rating"));
+
+    RequestDispatcher rd = req.getRequestDispatcher("result.jsp");
+    rd.forward(req, res);
+  }
+}
+
+
+<html>
+<head>
+<style>
+table { margin:auto; border-collapse:collapse; }
+td, th { border:1px solid black; padding:10px; }
+</style>
+</head>
+
+<body>
+<h2 align="center">Submitted Details</h2>
+
+<table>
+<tr><th>Name</th><td>${name}</td></tr>
+<tr><th>Email</th><td>${email}</td></tr>
+<tr><th>Course</th><td>${course}</td></tr>
+<tr><th>Rating</th><td>${rating}</td></tr>
+</table>
+
+<h3 align="center">Thank You!</h3>
+</body>
+</html>
